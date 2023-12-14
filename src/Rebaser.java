@@ -3,14 +3,21 @@ import java.lang.Math;
 public class Rebaser {
 
     private String storedValue;
-    private static final char[] LIST_OF_INPUTS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f'};
-    private static final String LIST_INPUTS = "0123456789ABCDEF";
+    private static final String INPUTS = "0123456789ABCDEF";
+
+    /**
+     * Default constructor for Rebaser object. Sets stored value to 0.
+     */
     public Rebaser(){
         storedValue = "0";
     }
 
-    public Rebaser(String value){
-        this.storedValue = value;
+    /**
+     * Constructor for Rebaser object. Sets stored value to value.
+     * @param value
+     */
+    public Rebaser(String value){ // do we need to check for integer inputs? Or will java change it to String by default.
+        this.storedValue = (String) value;
     }
 
     private boolean verifyInput(String input){
@@ -21,14 +28,15 @@ public class Rebaser {
         int p = 1;
         boolean ans;
         for (int i = 0; i < input.length(); i++){
-            if (LIST_INPUTS.contains(newStr.substring(i, i+1))){
+            if (INPUTS.contains(newStr.substring(i, i+1))){
                 p *= 1;
             }
             else{
                 p *= 0;
             }
         }
-        return ((p == 1) ? (ans = true) : (ans = false));
+        ans = (p == 1);
+        return (ans);
     }
     /**
      * Changes the stored value to the user-input value.
@@ -56,10 +64,19 @@ public class Rebaser {
         return ""; // placeholder
     }
 
+    /**
+     *
+     * @param n
+     * @return
+     */
     public String convertToBase10(int n){
         return ""; // placeholder
     }
 
+    /**
+     *
+     * @param args
+     */
     // Just for testing purposes
     public static void main (String[] args){
     }
