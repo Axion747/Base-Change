@@ -1,9 +1,13 @@
 import java.util.Arrays;
 import java.lang.Math;
+import java.util.HashMap;
 public class Rebaser {
 
     private String storedValue;
-    private static final String INPUTS = "0123456789ABCDEF";
+    private static final String INPUTS = "ABCDEF0123456789";
+    private static final int[] CONV = {10, 11, 12, 13, 14, 15};
+
+    private static final HashMap<String, Integer> CONVERSION = new HashMap<String, Integer>();
 
     /**
      * Default constructor for Rebaser object. Sets stored value to 0.
@@ -14,10 +18,15 @@ public class Rebaser {
 
     /**
      * Constructor for Rebaser object. Sets stored value to value.
-     * @param value
+     * @param value A string containing
      */
     public Rebaser(String value){ // do we need to check for integer inputs? Or will java change it to String by default.
-        this.storedValue = (String) value;
+        if (verifyInput(value)){
+            this.storedValue = (String) value;
+        }
+        else {
+            this.storedValue = "0";
+        }
     }
 
     private boolean verifyInput(String input){
@@ -54,6 +63,21 @@ public class Rebaser {
         return ""; // place holder
     }
 
+    private static int conversion_f(String input){
+        char[] arr1 = new char[input.length()];
+        int[] arr = new int[input.length()];
+        CONVERSION.put("A", 10);
+        CONVERSION.put("B", 11);
+        CONVERSION.put("C", 12);
+        CONVERSION.put("D", 13);
+        CONVERSION.put("E", 14);
+        CONVERSION.put("F", 15);
+
+        for (int i = 0; i < input.length(); i++){
+            arr1[i] = input.charAt(i);
+        }
+    }
+
     /**
      * Converts stored value (assumed in base 10) to a base n.
      * @param n The base value to be converted to.
@@ -73,10 +97,6 @@ public class Rebaser {
         return ""; // placeholder
     }
 
-    /**
-     *
-     * @param args
-     */
     // Just for testing purposes
     public static void main (String[] args){
     }
