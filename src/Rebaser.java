@@ -7,8 +7,25 @@ public class Rebaser {
     private static final String INPUTS = "ABCDEF0123456789";
     private static final int[] CONV = {10, 11, 12, 13, 14, 15};
 
-    private static final HashMap<String, Integer> CONVERSION = new HashMap<String, Integer>();
-
+    private static final HashMap<Character, Integer> CONVERSION = new HashMap<Character, Integer>();
+    static {
+        CONVERSION.put('1', 1);
+        CONVERSION.put('2', 2);
+        CONVERSION.put('3', 3);
+        CONVERSION.put('4', 4);
+        CONVERSION.put('5', 5);
+        CONVERSION.put('6', 6);
+        CONVERSION.put('7', 7);
+        CONVERSION.put('8', 8);
+        CONVERSION.put('9', 9);
+        CONVERSION.put('0', 0);
+        CONVERSION.put('A', 10);
+        CONVERSION.put('B', 11);
+        CONVERSION.put('C', 12);
+        CONVERSION.put('D', 13);
+        CONVERSION.put('E', 14);
+        CONVERSION.put('F', 15);
+    }
     /**
      * Default constructor for Rebaser object. Sets stored value to 0.
      */
@@ -37,11 +54,8 @@ public class Rebaser {
         int p = 1;
         boolean ans;
         for (int i = 0; i < input.length(); i++){
-            if (INPUTS.contains(newStr.substring(i, i+1))){
-                p *= 1;
-            }
-            else{
-                p *= 0;
+            if (!INPUTS.contains(newStr.substring(i, i+1))){
+                p = 0;
             }
         }
         ans = (p == 1);
@@ -52,7 +66,7 @@ public class Rebaser {
      * @param value Non-negative integer in base 16 or less.
      */
     public void setValue(String value){
-
+        this.storedValue = value;
     }
 
     /**
@@ -60,22 +74,7 @@ public class Rebaser {
      * @return Stored value as a string.
      */
     public String getValue(){
-        return ""; // place holder
-    }
-
-    private static int conversion_f(String input){
-        char[] arr1 = new char[input.length()];
-        int[] arr = new int[input.length()];
-        CONVERSION.put("A", 10);
-        CONVERSION.put("B", 11);
-        CONVERSION.put("C", 12);
-        CONVERSION.put("D", 13);
-        CONVERSION.put("E", 14);
-        CONVERSION.put("F", 15);
-
-        for (int i = 0; i < input.length(); i++){
-            arr1[i] = input.charAt(i);
-        }
+        return storedValue;
     }
 
     /**
@@ -84,7 +83,7 @@ public class Rebaser {
      * @return The stored value in base n as a String.
      */
 
-    public String convertToBaseN(int n){
+    public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
         return ""; // placeholder
     }
 
@@ -93,12 +92,13 @@ public class Rebaser {
      * @param n
      * @return
      */
-    public String convertToBase10(int n){
-        return ""; // placeholder
+    public String convertToBase10(int n){ // Need to check if the "n" value is valid (ie. there can't be a base of 12 if we have an F in the stored value, should have something that checks for that input
+        int[] arr = new int[storedValue.length()]; // creates new array that stores the value of each of the "place-values" of the input number
+        double sum = 0; // sets a sum value default to 0
+        for (int j = storedValue.length()-1, i = 0; j >= 0; j--, i++){ // cycles through the string array in reverse but sets it in new array starting from index 0
+            arr[i] = CONVERSION.get(storedValue.charAt(j)); // checks and returns the respective value stored with the given key
+            sum += arr[i]*Math.pow(n, i); // adds all the values to a sum that will be represented in base 10
+        }
+        return ((int) sum + ""); // returns the base 10 value of the stored number that was in base n
     }
-
-    // Just for testing purposes
-    public static void main (String[] args){
-    }
-
 }
