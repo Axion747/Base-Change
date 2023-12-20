@@ -4,6 +4,7 @@ import java.util.HashMap;
 public class Rebaser {
 
     private String storedValue;
+    private static final int ASCII_DIFF = 87;
     private static final String INPUTS = "ABCDEF0123456789";
     private static final int[] CONV = {10, 11, 12, 13, 14, 15};
 
@@ -54,8 +55,9 @@ public class Rebaser {
         int p = 1;
         boolean ans;
         for (int i = 0; i < input.length(); i++){
-            if (!INPUTS.contains(newStr.substring(i, i+1))){
+            if (!INPUTS.contains(newStr.substring(i, i + 1))) {
                 p = 0;
+                break;
             }
         }
         ans = (p == 1);
@@ -88,11 +90,30 @@ public class Rebaser {
     }
 
     /**
-     *
-     * @param n
-     * @return
+     * Converts the stored value (assumed in base n) to base 10.
+     * @param n The base the stored value is assumed to be in.
+     * @return The stored value in base 10 .
      */
-    public String convertToBase10(int n){ // Need to check if the "n" value is valid (ie. there can't be a base of 12 if we have an F in the stored value, should have something that checks for that input
+
+    public String convertToBase10(int n){
+        int[] storedArr = new int[storedValue.length()];
+        int returnVal = 0;
+        for (int i = 0; i < storedValue.length(); i++){
+            if (storedValue.toLowerCase().charAt(i) <= 102 || storedValue.toLowerCase().charAt(i) >= 97){
+                storedArr[i] = (storedValue.toLowerCase().charAt(i) - ASCII_DIFF);
+            }
+            else {
+                storedArr[i] = storedValue.toLowerCase().charAt(i);
+            }
+        }
+        for (int i = storedArr.length - 1, j = 0; i >= 0; i--, j++){
+            returnVal += storedArr[i] * (int) Math.pow(n, j);
+        }
+        return (returnVal + "");
+    }
+
+
+    private String convertToBaseTen(int n){ // Need to check if the "n" value is valid (ie. there can't be a base of 12 if we have an F in the stored value, should have something that checks for that input
         int[] arr = new int[storedValue.length()]; // creates new array that stores the value of each of the "place-values" of the input number
         double sum = 0; // sets a sum value default to 0
         for (int j = storedValue.length()-1, i = 0; j >= 0; j--, i++){ // cycles through the string array in reverse but sets it in new array starting from index 0
