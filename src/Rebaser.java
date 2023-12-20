@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.lang.Math;
 import java.util.HashMap;
 public class Rebaser {
@@ -84,9 +83,25 @@ public class Rebaser {
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
      */
-
+    // CURRENTLY DOES NOT WORK.
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
-        return ""; // placeholder
+        if (checkValid(storedValue, 10)) {
+            return ("Stored value not a valid base-10 input.");
+        }
+        String ans = "";
+        String result = "";
+        int remainder;
+        int tAns = Integer.parseInt(storedValue);
+        while (tAns >= n){
+            tAns = tAns / n;
+            remainder = tAns & n;
+            ans += remainder;
+        }
+        ans += tAns;
+        for (int i = ans.length() - 1; i >= 0; i--){
+            result += ans.charAt(i);
+        }
+        return result; // placeholder
     }
 
     /**
@@ -96,6 +111,9 @@ public class Rebaser {
      */
 
     public String convertToBase10(int n){
+        if (checkValid(storedValue, n)){
+            return ("Stored value has number not within bounds of declared base");
+        }
         int[] storedArr = new int[storedValue.length()];
         int returnVal = 0;
         for (int i = 0; i < storedValue.length(); i++){
@@ -110,6 +128,23 @@ public class Rebaser {
             returnVal += storedArr[i] * (int) Math.pow(n, j);
         }
         return (returnVal + "");
+    }
+
+    private boolean checkValid(String num, int base){
+        int p = 1;
+        for (int i = 0; i < num.length(); i++){
+            int testNum = num.toLowerCase().charAt(i);
+            if (testNum > 10){
+                testNum = testNum - ASCII_DIFF;
+            }
+            if (testNum > base){
+                p *= 0;
+            }
+            else {
+                p *= 1;
+            }
+        }
+        return (p != 1);
     }
 
 
