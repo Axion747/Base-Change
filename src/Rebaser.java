@@ -69,20 +69,27 @@ public class Rebaser {
         }
         String ans = "";
         String result = "";
-        int remainder;
+        int remainder = 0;
         int tAns = Integer.parseInt(storedValue);
-        while (tAns >= n){
-            remainder = tAns % n;
+        while (tAns >= n) {
+            remainder = (tAns % n);
+            if (remainder > 9) {
+                remainder = (char) (remainder + ASCII_DIFF);
+            }
+            ans += remainder + "";
             tAns = tAns / n;
-            ans += remainder;
         }
-        ans += tAns;
+        if (tAns >= 10){
+            ans += (char) (tAns + ASCII_DIFF);
+        }
+        else {
+            ans += tAns;
+        }
         for (int i = ans.length() - 1; i >= 0; i--){
-            result += ans.charAt(i);
+            result += (char) (ans.charAt(i));
         }
         return result; // placeholder
     }
-
     /**
      * Converts the stored value (assumed in base n) to base 10.
      * @param n The base the stored value is assumed to be in.
