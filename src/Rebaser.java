@@ -62,14 +62,13 @@ public class Rebaser {
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
      */
-    // CURRENTLY DOES NOT WORK.
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
         if (checkInvalid(storedValue, 10)) {
             return ("-1"); // used to check if
         }
         String ans = "";
         String result = "";
-        int remainder = 0;
+        int remainder;
         int tAns = Integer.parseInt(storedValue);
         while (tAns >= n) {
             remainder = (tAns % n);

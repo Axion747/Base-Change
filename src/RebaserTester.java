@@ -4,7 +4,7 @@ public class RebaserTester {
 //        System.out.println(12/11);
         Rebaser test = new Rebaser("AB");
 //        System.out.println(test.convertToBase10(13));
-        test.setValue("1700");
+        test.setValue("BF");
         System.out.println(test.convertToBaseN(12));
     }
 }
