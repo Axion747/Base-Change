@@ -122,9 +122,6 @@ public class Rebaser {
             if (testNum > base){
                 p *= 0;
             }
-            else {
-                p *= 1;
-            }
         }
         return (p != 1);
     }
