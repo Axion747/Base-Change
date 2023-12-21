@@ -86,15 +86,15 @@ public class Rebaser {
     // CURRENTLY DOES NOT WORK.
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
         if (checkValid(storedValue, 10)) {
-            return ("Stored value not a valid base-10 input.");
+            return ("-1"); // used to check if
         }
         String ans = "";
         String result = "";
         int remainder;
         int tAns = Integer.parseInt(storedValue);
         while (tAns >= n){
+            remainder = tAns % n;
             tAns = tAns / n;
-            remainder = tAns & n;
             ans += remainder;
         }
         ans += tAns;
@@ -112,7 +112,7 @@ public class Rebaser {
 
     public String convertToBase10(int n){
         if (checkValid(storedValue, n)){
-            return ("Stored value has number not within bounds of declared base");
+            return ("-1");
         }
         int[] storedArr = new int[storedValue.length()];
         int returnVal = 0;
