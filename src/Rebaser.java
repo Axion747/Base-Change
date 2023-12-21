@@ -85,7 +85,7 @@ public class Rebaser {
      */
     // CURRENTLY DOES NOT WORK.
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
-        if (checkValid(storedValue, 10)) {
+        if (checkInvalid(storedValue, 10)) {
             return ("-1"); // used to check if
         }
         String ans = "";
@@ -111,7 +111,7 @@ public class Rebaser {
      */
 
     public String convertToBase10(int n){
-        if (checkValid(storedValue, n)){
+        if (checkInvalid(storedValue, n)){
             return ("-1");
         }
         int[] storedArr = new int[storedValue.length()];
@@ -130,7 +130,10 @@ public class Rebaser {
         return (returnVal + "");
     }
 
-    private boolean checkValid(String num, int base){
+    private boolean checkInvalid(String num, int base){
+        if (num.isEmpty()){
+            return true;
+        }
         int p = 1;
         for (int i = 0; i < num.length(); i++){
             int testNum = num.toLowerCase().charAt(i);
@@ -145,16 +148,5 @@ public class Rebaser {
             }
         }
         return (p != 1);
-    }
-
-
-    private String convertToBaseTen(int n){ // Need to check if the "n" value is valid (ie. there can't be a base of 12 if we have an F in the stored value, should have something that checks for that input
-        int[] arr = new int[storedValue.length()]; // creates new array that stores the value of each of the "place-values" of the input number
-        double sum = 0; // sets a sum value default to 0
-        for (int j = storedValue.length()-1, i = 0; j >= 0; j--, i++){ // cycles through the string array in reverse but sets it in new array starting from index 0
-            arr[i] = CONVERSION.get(storedValue.charAt(j)); // checks and returns the respective value stored with the given key
-            sum += arr[i]*Math.pow(n, i); // adds all the values to a sum that will be represented in base 10
-        }
-        return ((int) sum + ""); // returns the base 10 value of the stored number that was in base n
     }
 }
