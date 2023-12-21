@@ -1,31 +1,10 @@
 import java.lang.Math;
-import java.util.HashMap;
 public class Rebaser {
 
     private String storedValue;
     private static final int ASCII_DIFF = 87;
     private static final String INPUTS = "ABCDEF0123456789";
-    private static final int[] CONV = {10, 11, 12, 13, 14, 15};
 
-    private static final HashMap<Character, Integer> CONVERSION = new HashMap<Character, Integer>();
-    static {
-        CONVERSION.put('1', 1);
-        CONVERSION.put('2', 2);
-        CONVERSION.put('3', 3);
-        CONVERSION.put('4', 4);
-        CONVERSION.put('5', 5);
-        CONVERSION.put('6', 6);
-        CONVERSION.put('7', 7);
-        CONVERSION.put('8', 8);
-        CONVERSION.put('9', 9);
-        CONVERSION.put('0', 0);
-        CONVERSION.put('A', 10);
-        CONVERSION.put('B', 11);
-        CONVERSION.put('C', 12);
-        CONVERSION.put('D', 13);
-        CONVERSION.put('E', 14);
-        CONVERSION.put('F', 15);
-    }
     /**
      * Default constructor for Rebaser object. Sets stored value to 0.
      */
