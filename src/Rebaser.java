@@ -2,7 +2,8 @@ import java.lang.Math;
 public class Rebaser {
 
     private String storedValue;
-    private static final int ASCII_DIFF = 87;
+    private static final int ASCII_CHAR_DIFF = 87;
+    private static final int ASCII_NUM_DIFF = 48;
     private static final String INPUTS = "ABCDEF0123456789";
 
     /**
@@ -73,13 +74,13 @@ public class Rebaser {
         while (tAns >= n) {
             remainder = (tAns % n);
             if (remainder > 9) {
-                remainder = (char) (remainder + ASCII_DIFF);
+                remainder = (char) (remainder + ASCII_CHAR_DIFF);
             }
             ans += remainder + "";
             tAns = tAns / n;
         }
         if (tAns >= 10){
-            ans += (char) (tAns + ASCII_DIFF);
+            ans += (char) (tAns + ASCII_CHAR_DIFF);
         }
         else {
             ans += tAns;
@@ -99,20 +100,43 @@ public class Rebaser {
         if (checkInvalid(storedValue, n)){
             return ("-1");
         }
-        int[] storedArr = new int[storedValue.length()];
-        int returnVal = 0;
+        int result = 0;
+        String value = storedValue.toLowerCase();
+        int[] arr = new int[storedValue.length()];
+        int tempInt;
         for (int i = 0; i < storedValue.length(); i++){
-            if (storedValue.toLowerCase().charAt(i) <= 102 || storedValue.toLowerCase().charAt(i) >= 97){
-                storedArr[i] = (storedValue.toLowerCase().charAt(i) - ASCII_DIFF);
+            tempInt = value.charAt(i);
+            if (value.charAt(i) >= 97){
+                tempInt = ((int) value.charAt(i) - ASCII_CHAR_DIFF);
             }
-            else {
-                storedArr[i] = storedValue.toLowerCase().charAt(i);
-            }
+            arr[i] = tempInt - ASCII_NUM_DIFF;
         }
-        for (int i = storedArr.length - 1, j = 0; i >= 0; i--, j++){
-            returnVal += storedArr[i] * (int) Math.pow(n, j);
+        int p = 0;
+        for (int j = arr.length - 1; j >= 0; j--){
+            result += (int) (arr[j] * Math.pow(n, p));
+            p++;
         }
-        return (returnVal + "");
+        return (result + "");
+
+
+
+
+//        int[] storedArr = new int[storedValue.length()];
+//        int returnVal = 0;
+//        for (int i = 0; i < storedValue.length(); i++){
+//            if (storedValue.toLowerCase().charAt(i) <= 102 && storedValue.toLowerCase().charAt(i) >= 97){
+//                storedArr[i] = (storedValue.toLowerCase().charAt(i) - ASCII_DIFF);
+//            }
+//            else {
+//                storedArr[i] = storedValue.charAt(i);
+//            }
+//        }
+//        int p = 0;
+//        for (int i = storedArr.length - 1; i >= 0; i--){
+//            returnVal += (int) (storedArr[i] * Math.pow(n, p));
+//            p++;
+//        }
+//        return (returnVal + "");
     }
 
     private boolean checkInvalid(String num, int base){
@@ -121,14 +145,14 @@ public class Rebaser {
         }
         int p = 1;
         for (int i = 0; i < num.length(); i++){
-            int testNum = num.toLowerCase().charAt(i);
+            int testNum = num.toLowerCase().charAt(i) - ASCII_NUM_DIFF;
             if (testNum > 10){
-                testNum = testNum - ASCII_DIFF;
+                testNum = testNum - ASCII_CHAR_DIFF;
             }
-            if (testNum > base){
-                p *= 0;
+            if (testNum >= base){
+                p = 0;
             }
         }
-        return (p != 1);
+        return (p == 0);
     }
 }
