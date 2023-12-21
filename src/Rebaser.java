@@ -117,26 +117,6 @@ public class Rebaser {
             p++;
         }
         return (result + "");
-
-
-
-
-//        int[] storedArr = new int[storedValue.length()];
-//        int returnVal = 0;
-//        for (int i = 0; i < storedValue.length(); i++){
-//            if (storedValue.toLowerCase().charAt(i) <= 102 && storedValue.toLowerCase().charAt(i) >= 97){
-//                storedArr[i] = (storedValue.toLowerCase().charAt(i) - ASCII_DIFF);
-//            }
-//            else {
-//                storedArr[i] = storedValue.charAt(i);
-//            }
-//        }
-//        int p = 0;
-//        for (int i = storedArr.length - 1; i >= 0; i--){
-//            returnVal += (int) (storedArr[i] * Math.pow(n, p));
-//            p++;
-//        }
-//        return (returnVal + "");
     }
 
     private boolean checkInvalid(String num, int base){
