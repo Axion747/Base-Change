@@ -1,3 +1,5 @@
+/** The Rebaser class stores a value in bases 2 through 16 and can convert it to bases 2 through 16. */
+
 import java.lang.Math;
 public class Rebaser {
 
