@@ -1,4 +1,5 @@
 import java.lang.Math;
+
 public class Rebaser {
 
     private String storedValue;
@@ -17,7 +18,7 @@ public class Rebaser {
      * Constructor for Rebaser object. Sets stored value to value.
      * @param value A string containing
      */
-    public Rebaser(String value){ // do we need to check for integer inputs? Or will java change it to String by default.
+    public Rebaser(String value){
         if (verifyInput(value)){
             this.storedValue = (String) value;
         }
@@ -42,6 +43,7 @@ public class Rebaser {
         ans = (p == 1);
         return (ans);
     }
+
     /**
      * Changes the stored value to the user-input value.
      * @param value Non-negative integer in base 16 or less.
@@ -90,12 +92,12 @@ public class Rebaser {
         }
         return result; // placeholder
     }
+
     /**
      * Converts the stored value (assumed in base n) to base 10.
      * @param n The base the stored value is assumed to be in.
      * @return The stored value in base 10 .
      */
-
     public String convertToBase10(int n){
         if (checkInvalid(storedValue, n)){
             return ("-1");
@@ -123,16 +125,24 @@ public class Rebaser {
         if (num.isEmpty()){
             return true;
         }
-        int p = 1;
+        num = num.toLowerCase();
         for (int i = 0; i < num.length(); i++){
-            int testNum = num.toLowerCase().charAt(i) - ASCII_NUM_DIFF;
-            if (testNum > 10){
-                testNum = testNum - ASCII_CHAR_DIFF;
+            char c = num.charAt(i);
+            int value;
+            if (Character.isDigit(c)) {
+                value = c - '0';
+            } else if (Character.isLetter(c) && c >= 'a' && c <= 'f') {
+                value = 10 + c - 'a';
+            } else {
+                // Invalid character
+                return true;
             }
-            if (testNum >= base){
-                p = 0;
+
+            if (value >= base) {
+                // Value of the digit/letter is not valid for the given base
+                return true;
             }
         }
-        return (p == 0);
+        return false;
     }
 }
