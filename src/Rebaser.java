@@ -5,53 +5,53 @@
 public class Rebaser {
 
     private String storedValue;
-    private static final int ASCII_CHAR_DIFF = 87;
     private static final String INPUTS = "ABCDEF0123456789";
 
     /**
      * Default constructor for Rebaser object. Sets stored value to 0.
+     *
      * @author Benson Zhang and Serena Taxin
      */
-    public Rebaser(){
+    public Rebaser() {
         storedValue = "0";
     }
 
     /**
      * Constructs a new Rebaser object with a stored value to be converted.
+     *
      * @param value A string containing the value to be converted.
      * @author Benson Zhang and Serena Taxin
      */
-    public Rebaser(String value){
-        if (verifyInput(value)){
+    public Rebaser(String value) {
+        if (verifyInput(value)) {
             this.storedValue = value;
-        }
-        else {
+        } else {
             this.storedValue = "0";
         }
     }
 
     /**
      * Changes the stored value to the user-input value.
+     *
      * @param value Non-negative integer in base 16 or less.
      * @author Benson Zhang and Serena Taxin
      */
-    public void setValue(String value){
-        if (verifyInput(value)){
+    public void setValue(String value) {
+        if (verifyInput(value)) {
             this.storedValue = value;
-        }
-        else {
+        } else {
             this.storedValue = "0";
         }
     }
 
-    private boolean verifyInput(String input){
-        if (input.isEmpty()){
+    private boolean verifyInput(String input) {
+        if (input.isEmpty()) {
             return false;
         }
         String upperCaseInput = input.toUpperCase();
         int isValid = 1;
         boolean isValidResult;
-        for (int i = 0; i < input.length(); i++){
+        for (int i = 0; i < input.length(); i++) {
             if (!INPUTS.contains(upperCaseInput.substring(i, i + 1))) {
                 isValid = 0;
                 break;
@@ -63,20 +63,22 @@ public class Rebaser {
 
     /**
      * Retrieves stored value.
+     *
      * @return Stored value as a string.
      * @author Benson Zhang and Serena Taxin
      */
-    public String getValue(){
+    public String getValue() {
         return storedValue;
     }
 
     /**
      * Converts stored value (assumed in base 10) to a base n.
+     *
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
      * @author Benson Zhang and Serena Taxin
      */
-    public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
+    public String convertToBaseN(int n) { // should just be convert to base 10 and then from base 10 to another base
         if (checkInvalid(storedValue, 10)) {
             return "-1"; // used to check if
         }
@@ -91,44 +93,45 @@ public class Rebaser {
 
         return convertedString.isEmpty() ? "0" : convertedString;
     }
+
     /**
      * Converts the stored value (assumed in base n) to base 10.
+     *
      * @param n The base the stored value is assumed to be in.
      * @return The stored value in base 10.
      * @author Benson Zhang and Serena Taxin
      */
 
-    public String convertToBase10(int n){
-        if (checkInvalid(storedValue, n)){
+    public String convertToBase10(int n) {
+        if (checkInvalid(storedValue, n)) {
             return ("-1");
         }
         int result = 0;
         String value = storedValue.toUpperCase();
-        
-        for (int i = 0; i < value.length(); i++){
-           int digitValue = Character.digit(value.charAt(i), n);
+
+        for (int i = 0; i < value.length(); i++) {
+            int digitValue = Character.digit(value.charAt(i), n);
             if (digitValue < 0 || digitValue >= n) {
                 return "-1";
             }
             result = result * n + digitValue;
         }
-        
+
         return Integer.toString(result);
     }
 
-private boolean checkInvalid(String num, int base){
-        if (num.isEmpty()){
+    private boolean checkInvalid(String num, int base) {
+        if (num.isEmpty()) {
             return true;
         }
-        
         num = num.toUpperCase();
-        
-        for (int i = 0; i < num.length(); i++){
-           int value = Character.digit(num.charAt(i),base);
+        for (int i = 0; i < num.length(); i++) {
+            int value = Character.digit(num.charAt(i), base);
 
             if (value < 0) {
                 return true;
             }
         }
         return false;
+    }
 }
