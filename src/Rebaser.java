@@ -49,7 +49,12 @@ public class Rebaser {
      * @param value Non-negative integer in base 16 or less.
      */
     public void setValue(String value){
-        this.storedValue = value;
+        if (value.isEmpty()){
+            this.storedValue = "0";
+        }
+        else{
+            this.storedValue = value;
+        }
     }
 
     /**
@@ -65,9 +70,9 @@ public class Rebaser {
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
      */
-    public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
+    public String convertToBaseN(int n){ //
         if (checkInvalid(storedValue, 10)) {
-            return ("-1"); // used to check if
+            return ("-1");
         }
         String ans = "";
         String result = "";
@@ -98,27 +103,26 @@ public class Rebaser {
      * @param n The base the stored value is assumed to be in.
      * @return The stored value in base 10 .
      */
+
     public String convertToBase10(int n){
-        if (checkInvalid(storedValue, n)){
-            return ("-1");
+        if (checkInvalid(storedValue, n)) {
+            return "-1";
         }
         int result = 0;
         String value = storedValue.toLowerCase();
-        int[] arr = new int[storedValue.length()];
-        int tempInt;
-        for (int i = 0; i < storedValue.length(); i++){
-            tempInt = value.charAt(i);
-            if (value.charAt(i) >= 97){
-                tempInt = ((int) value.charAt(i) - ASCII_CHAR_DIFF);
+        int modification;
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))){
+                modification = '0';
             }
-            arr[i] = tempInt - ASCII_NUM_DIFF;
+            else {
+                modification = ASCII_CHAR_DIFF;
+            }
+            int digitValue = value.charAt(i) - modification;
+            result = result * n + digitValue;
         }
-        int p = 0;
-        for (int j = arr.length - 1; j >= 0; j--){
-            result += (int) (arr[j] * Math.pow(n, p));
-            p++;
-        }
-        return (result + "");
+
+        return Integer.toString(result);
     }
 
     private boolean checkInvalid(String num, int base){
@@ -132,14 +136,11 @@ public class Rebaser {
             if (Character.isDigit(c)) {
                 value = c - '0';
             } else if (Character.isLetter(c) && c >= 'a' && c <= 'f') {
-                value = 10 + c - 'a';
+                value = c - ASCII_CHAR_DIFF;
             } else {
-                // Invalid character
                 return true;
             }
-
             if (value >= base) {
-                // Value of the digit/letter is not valid for the given base
                 return true;
             }
         }
