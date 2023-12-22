@@ -73,13 +73,12 @@ public class Rebaser {
 
     /**
      * Converts stored value (assumed in base 10) to a base n.
-     *
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
      * @author Benson Zhang and Serena Taxin
      */
     public String convertToBaseN(int n) { // should just be convert to base 10 and then from base 10 to another base
-        if (checkInvalid(storedValue, 10)) {
+        if (checkInvalid(storedValue, 10) || n < 2 || n > 16) {
             return "-1"; // used to check if
         }
         String convertedString = "";
