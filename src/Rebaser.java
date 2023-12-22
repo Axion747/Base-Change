@@ -116,25 +116,19 @@ public class Rebaser {
         return Integer.toString(result);
     }
 
-    private boolean checkInvalid(String num, int base){
+private boolean checkInvalid(String num, int base){
         if (num.isEmpty()){
             return true;
         }
-        num = num.toLowerCase();
+        
+        num = num.toUpperCase();
+        
         for (int i = 0; i < num.length(); i++){
-            char c = num.charAt(i);
-            int value;
-            if (Character.isDigit(c)) {
-                value = c - '0';
-            } else if (Character.isLetter(c) && c >= 'a' && c <= 'f') {
-                value = c - ASCII_CHAR_DIFF;
-            } else {
-                return true;
-            }
-            if (value >= base) {
+           int value = Character.digit(num.charAt(i),base);
+
+            if (value < 0) {
                 return true;
             }
         }
         return false;
-    }
 }
