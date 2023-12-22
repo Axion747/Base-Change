@@ -96,22 +96,17 @@ public class Rebaser {
             return ("-1");
         }
         int result = 0;
-        String value = storedValue.toLowerCase();
-        int[] digitValues = new int[storedValue.length()];
-        int numericValue;
-        for (int i = 0; i < storedValue.length(); i++){
-            numericValue = value.charAt(i);
-            if (value.charAt(i) >= 97){
-                numericValue = ((int) value.charAt(i) - ASCII_CHAR_DIFF);
+        String value = storedValue.toUpperCase();
+        
+        for (int i = 0; i < value.length(); i++){
+           int digitValue = Character.digit(value.charAt(i), n);
+            if (digitValue < 0 || digitValue >= n) {
+                return "-1";
             }
-            digitValues[i] = numericValue - ASCII_NUM_DIFF;
+            result = result * n + digitValue;
         }
-        int exponent = 0;
-        for (int j = digitValues.length - 1; j >= 0; j--){
-            result += (int) (digitValues[j] * Math.pow(n, exponent));
-            exponent++;
-        }
-        return (result + "");
+        
+        return Integer.toString(result);
     }
 
     private boolean checkInvalid(String num, int base){
