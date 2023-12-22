@@ -72,30 +72,18 @@ public class Rebaser {
      */
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
         if (checkInvalid(storedValue, 10)) {
-            return ("-1"); // used to check if
+            return "-1"; // used to check if
         }
         String convertedString = "";
-        String reverseConvertedString = "";
-        int remainder;
         int tempValue = Integer.parseInt(storedValue);
-        while (tempValue >= n) {
-            remainder = (tempValue % n);
-            if (remainder > 9) {
-                remainder = (char) (remainder + ASCII_CHAR_DIFF);
-            }
-            convertedString += remainder + "";
-            tempValue = tempValue / n;
+        while (tempValue > 0) {
+            int remainder = (tempValue % n);
+            char digit = Character.forDigit(remainder, n);
+            convertedString = digit + convertedString;
+            tempValue /= n;
         }
-        if (tempValue >= 10){
-            convertedString += (char) (tempValue + ASCII_CHAR_DIFF);
-        }
-        else {
-            convertedString += tempValue;
-        }
-        for (int i = convertedString.length() - 1; i >= 0; i--){
-            reverseConvertedString += (char) (convertedString.charAt(i));
-        }
-        return reverseConvertedString; // placeholder
+
+        return convertedString.isEmpty() ? "0" : convertedString;
     }
     /**
      * Converts the stored value (assumed in base n) to base 10.
