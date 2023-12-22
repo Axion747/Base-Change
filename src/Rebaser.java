@@ -28,6 +28,19 @@ public class Rebaser {
         }
     }
 
+    /**
+     * Changes the stored value to the user-input value.
+     * @param value Non-negative integer in base 16 or less.
+     */
+    public void setValue(String value){
+        if (verifyInput(value)){
+            this.storedValue = value;
+        }
+        else {
+            this.storedValue = "0";
+        }
+    }
+
     private boolean verifyInput(String input){
         if (input.isEmpty()){
             return false;
@@ -43,18 +56,6 @@ public class Rebaser {
         }
         isValidResult = (isValid == 1);
         return (isValidResult);
-    }
-    /**
-     * Changes the stored value to the user-input value.
-     * @param value Non-negative integer in base 16 or less.
-     */
-    public void setValue(String value){
-       if (verifyInput(value)){
-            this.storedValue = value;
-        }
-        else {
-            this.storedValue = 0;
-        }
     }
 
     /**
@@ -113,16 +114,21 @@ public class Rebaser {
         if (num.isEmpty()){
             return true;
         }
-        int isValid = 1;
+        num = num.toLowerCase();
         for (int i = 0; i < num.length(); i++){
-            int testNum = num.toLowerCase().charAt(i) - ASCII_NUM_DIFF;
-            if (testNum > 10){
-                testNum = testNum - ASCII_CHAR_DIFF;
+            char c = num.charAt(i);
+            int value;
+            if (Character.isDigit(c)) {
+                value = c - '0';
+            } else if (Character.isLetter(c) && c >= 'a' && c <= 'f') {
+                value = c - ASCII_CHAR_DIFF;
+            } else {
+                return true;
             }
-            if (testNum >= base){
-                isValid = 0;
+            if (value >= base) {
+                return true;
             }
         }
-        return (isValid == 0);
+        return false;
     }
 }
