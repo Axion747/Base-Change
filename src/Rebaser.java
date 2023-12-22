@@ -119,20 +119,22 @@ public class Rebaser {
 
         return Integer.toString(result);
     }
-
-    private boolean checkInvalid(String num, int base) {
-        if (base < 2 || base > 16) {
+    private boolean checkInvalid(String num, int base){
+        if (num.isEmpty()){
             return true;
         }
-
-        if (num.isEmpty()) {
-            return true;
-        }
-        num = num.toUpperCase();
-        for (int i = 0; i < num.length(); i++) {
-            int value = Character.digit(num.charAt(i), base);
-
-            if (value < 0) {
+        num = num.toLowerCase();
+        for (int i = 0; i < num.length(); i++){
+            char c = num.charAt(i);
+            int value;
+            if (Character.isDigit(c)) {
+                value = c - '0';
+            } else if (Character.isLetter(c) && c >= 'a' && c <= 'f') {
+                value = c - 'a' + 10;
+            } else {
+                return true;
+            }
+            if (value >= base) {
                 return true;
             }
         }
