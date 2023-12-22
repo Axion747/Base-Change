@@ -16,10 +16,10 @@ public class Rebaser {
     }
 
     /**
-     * Constructor for Rebaser object. Sets stored value to value.
-     * @param value A string containing
+     * Constructs a new Rebaser object with a stored value to be converted.
+     * @param value A string containing the value to be converted.
      */
-    public Rebaser(String value){ // do we need to check for integer inputs? Or will java change it to String by default.
+    public Rebaser(String value){
         if (verifyInput(value)){
             this.storedValue = (String) value;
         }
@@ -32,24 +32,29 @@ public class Rebaser {
         if (input.isEmpty()){
             return false;
         }
-        String newStr = input.toUpperCase();
-        int p = 1;
-        boolean ans;
+        String upperCaseInput = input.toUpperCase();
+        int isValid = 1;
+        boolean isValidResult;
         for (int i = 0; i < input.length(); i++){
-            if (!INPUTS.contains(newStr.substring(i, i + 1))) {
-                p = 0;
+            if (!INPUTS.contains(upperCaseInput.substring(i, i + 1))) {
+                isValid = 0;
                 break;
             }
         }
-        ans = (p == 1);
-        return (ans);
+        isValidResult = (isValid == 1);
+        return (isValidResult);
     }
     /**
      * Changes the stored value to the user-input value.
      * @param value Non-negative integer in base 16 or less.
      */
     public void setValue(String value){
-        this.storedValue = value;
+       if (verifyInput(value)){
+            this.storedValue = value;
+        }
+        else {
+            this.storedValue = 0;
+        }
     }
 
     /**
@@ -69,28 +74,28 @@ public class Rebaser {
         if (checkInvalid(storedValue, 10)) {
             return ("-1"); // used to check if
         }
-        String ans = "";
-        String result = "";
+        String convertedString = "";
+        String reverseConvertedString = "";
         int remainder;
-        int tAns = Integer.parseInt(storedValue);
-        while (tAns >= n) {
-            remainder = (tAns % n);
+        int tempValue = Integer.parseInt(storedValue);
+        while (tempValue >= n) {
+            remainder = (tempValue % n);
             if (remainder > 9) {
                 remainder = (char) (remainder + ASCII_CHAR_DIFF);
             }
-            ans += remainder + "";
-            tAns = tAns / n;
+            convertedString += remainder + "";
+            tempValue = tempValue / n;
         }
-        if (tAns >= 10){
-            ans += (char) (tAns + ASCII_CHAR_DIFF);
+        if (tempValue >= 10){
+            convertedString += (char) (tempValue + ASCII_CHAR_DIFF);
         }
         else {
-            ans += tAns;
+            convertedString += tempValue;
         }
-        for (int i = ans.length() - 1; i >= 0; i--){
-            result += (char) (ans.charAt(i));
+        for (int i = convertedString.length() - 1; i >= 0; i--){
+            reverseConvertedString += (char) (convertedString.charAt(i));
         }
-        return result; // placeholder
+        return reverseConvertedString; // placeholder
     }
     /**
      * Converts the stored value (assumed in base n) to base 10.
@@ -104,19 +109,19 @@ public class Rebaser {
         }
         int result = 0;
         String value = storedValue.toLowerCase();
-        int[] arr = new int[storedValue.length()];
-        int tempInt;
+        int[] digitValues = new int[storedValue.length()];
+        int numericValue;
         for (int i = 0; i < storedValue.length(); i++){
-            tempInt = value.charAt(i);
+            numericValue = value.charAt(i);
             if (value.charAt(i) >= 97){
-                tempInt = ((int) value.charAt(i) - ASCII_CHAR_DIFF);
+                numericValue = ((int) value.charAt(i) - ASCII_CHAR_DIFF);
             }
-            arr[i] = tempInt - ASCII_NUM_DIFF;
+            digitValues[i] = numericValue - ASCII_NUM_DIFF;
         }
-        int p = 0;
-        for (int j = arr.length - 1; j >= 0; j--){
-            result += (int) (arr[j] * Math.pow(n, p));
-            p++;
+        int exponent = 0;
+        for (int j = digitValues.length - 1; j >= 0; j--){
+            result += (int) (digitValues[j] * Math.pow(n, exponent));
+            exponent++;
         }
         return (result + "");
     }
@@ -125,16 +130,16 @@ public class Rebaser {
         if (num.isEmpty()){
             return true;
         }
-        int p = 1;
+        int isValid = 1;
         for (int i = 0; i < num.length(); i++){
             int testNum = num.toLowerCase().charAt(i) - ASCII_NUM_DIFF;
             if (testNum > 10){
                 testNum = testNum - ASCII_CHAR_DIFF;
             }
             if (testNum >= base){
-                p = 0;
+                isValid = 0;
             }
         }
-        return (p == 0);
+        return (isValid == 0);
     }
 }
