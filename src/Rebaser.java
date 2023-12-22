@@ -1,15 +1,16 @@
-/** The Rebaser class stores a value in bases 2 through 16 and can convert it to bases 2 through 16. We discussed and worked together on all methods. @author Benson Zhang and Serena Taxin*/
-
-import java.lang.Math;
+/**
+ * The Rebaser class stores a value in bases 2 through 16 and can convert it to bases 2 through 16. We discussed and worked together on all methods.
+ * @author Benson Zhang and Serena Taxin
+ */
 public class Rebaser {
 
     private String storedValue;
     private static final int ASCII_CHAR_DIFF = 87;
-    private static final int ASCII_NUM_DIFF = 48;
     private static final String INPUTS = "ABCDEF0123456789";
 
     /**
      * Default constructor for Rebaser object. Sets stored value to 0.
+     * @author Benson Zhang and Serena Taxin
      */
     public Rebaser(){
         storedValue = "0";
@@ -18,10 +19,11 @@ public class Rebaser {
     /**
      * Constructs a new Rebaser object with a stored value to be converted.
      * @param value A string containing the value to be converted.
+     * @author Benson Zhang and Serena Taxin
      */
     public Rebaser(String value){
         if (verifyInput(value)){
-            this.storedValue = (String) value;
+            this.storedValue = value;
         }
         else {
             this.storedValue = "0";
@@ -31,6 +33,7 @@ public class Rebaser {
     /**
      * Changes the stored value to the user-input value.
      * @param value Non-negative integer in base 16 or less.
+     * @author Benson Zhang and Serena Taxin
      */
     public void setValue(String value){
         if (verifyInput(value)){
@@ -61,6 +64,7 @@ public class Rebaser {
     /**
      * Retrieves stored value.
      * @return Stored value as a string.
+     * @author Benson Zhang and Serena Taxin
      */
     public String getValue(){
         return storedValue;
@@ -70,6 +74,7 @@ public class Rebaser {
      * Converts stored value (assumed in base 10) to a base n.
      * @param n The base value to be converted to.
      * @return The stored value in base n as a String.
+     * @author Benson Zhang and Serena Taxin
      */
     public String convertToBaseN(int n){ // should just be convert to base 10 and then from base 10 to another base
         if (checkInvalid(storedValue, 10)) {
@@ -89,7 +94,8 @@ public class Rebaser {
     /**
      * Converts the stored value (assumed in base n) to base 10.
      * @param n The base the stored value is assumed to be in.
-     * @return The stored value in base 10 .
+     * @return The stored value in base 10.
+     * @author Benson Zhang and Serena Taxin
      */
 
     public String convertToBase10(int n){
