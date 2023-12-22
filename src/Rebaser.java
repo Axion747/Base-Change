@@ -101,7 +101,6 @@ public class Rebaser {
      * @author Benson Zhang and Serena Taxin
      */
 
-    //make sure not larger than Integer.MAX_VALUE?
     public String convertToBase10(int n) {
         if (checkInvalid(storedValue, n)) {
             return ("-1");
